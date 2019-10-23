@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 binom_regression.R
+interaction_atsi_education.png
+interaction_sex_age.png

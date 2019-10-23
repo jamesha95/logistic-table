@@ -20,17 +20,20 @@ raw_by_sa4 <- read_csv("ABS Stats conf unemp data.csv",
                        ),
                        col_types = "ccfffffd") %>%
   filter(!(is.na(lfs))) %>%
-  left_join(sa42016 %>% select(sa4_name_2016, state_name_2016),
+  left_join(sa42016 %>% select(sa4_name_2016, state_name_2016, areasqkm_2016),
             by = c("sa4" = "sa4_name_2016")) %>%
   filter(!str_starts(sa4, "Migratory"), 
          !str_starts(sa4, "No usual")) %>%
   select(-dataset) %>%
   rename(state = state_name_2016) %>%
-  mutate(sa4 = factor(sa4), 
-         state = factor(state)) %>%
   select(state, everything())
 
 glimpse(raw_by_sa4)
+
+pop_data <- read_csv('population_by_sa4.csv', skip = 10, col_names = c("dataset", "sa4", "population"))
+
+raw_by_sa4 <- raw_by_sa4 %>% left_join(select(pop_data, -dataset), by = "sa4") %>%
+  mutate(density = population/areasqkm_2016)
 
 write_csv(raw_by_sa4, "unemployment_data_by_sa4.csv")
 
