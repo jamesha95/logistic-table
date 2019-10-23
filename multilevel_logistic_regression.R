@@ -97,8 +97,30 @@ sa4_effects = mutate(sa4_effects, sa4 = row.names(sa4_effects))
 sa4_effects %>% 
   arrange(desc(`(Intercept)`))
 
+#------- A second example, using population density ---------------------------------------------------------
+fe_2 <- glm(data = wide_form, 
+            formula = cbind(unemp, emp) ~ logdensity + sa4 + age + sex + atsi + education + age:sex + atsi:education, 
+            family = binomial())
 
+summary(fe_2)
 
+exp(fe_2$coefficients)[["logdensity"]]
+# This suggests that residents of higher-density sa4s are less likely to experience unemployment
+# A resident of an sa4 with 10x the density has 8% lower odds of being unemployed
+
+me_2 <- glmer(data = wide_form, 
+                       formula = cbind(unemp, emp) ~ logdensity + age + sex + atsi + education + age:sex + atsi:education + (1|sa4), 
+                       family = binomial())
+
+summary(me_2)
+
+exp(me_2@beta)[[2]]
+# Now higher-density areas are associated with high unemployment (but it's non-signficant)
+# Allowing random intercepts for sa4s has allowed us to separate the effects due to density from
+# the effects due to unobserved group characteristics.
+# Previously, the sa4 level estimated effects were confounded by density.
+# And this suggests that there's probably unobserved sa4 factors other than density that are driving 
+# the different unemployment rates between regions.
 
 # ------- Diagnostics - using SA4 as a predictor vs not using any geography -----------------------
 

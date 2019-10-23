@@ -75,16 +75,16 @@ logit_model$coefficients %>% exp()
 # That means the probability of unemployment is 3.1%, using the formula prob = odds/(1+odds)
 
 cameo <- data.frame(#State name in full
-  state = "Queensland", 
+  state = "Victoria", 
   
   # "25-29 years" up to "60-64 years"
-  age = "35-39 years",
+  age = "25-29 years",
   
   # "Female" or "Male"
-  sex = "Female", 
+  sex = "Male", 
   
   # "Non-Indigenous" or "ATSI (any)" or "Not stated"
-  atsi = "Non-Indigenous",
+  atsi = "ATSI (any)",
   
   # "Lower than degree-level or NA/NS/SC" or "Degree-level or higher"
   education = "Lower than degree-level or NA/NS/SC")
