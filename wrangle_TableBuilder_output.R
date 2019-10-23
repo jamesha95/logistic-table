@@ -6,7 +6,7 @@ library(absmapsdata) # Will's very helpful package
 
 # We extracted data from TableBuilder as 'csv string value'
 
-raw_by_sa4 <- read_csv("ABS Stats conf unemp data.csv", 
+raw_by_sa4 <- read_csv("raw_data/ABS Stats conf unemp data.csv", 
                        # There's lots of lines of junk in TableBuilder output
                        skip = 10, 
                        col_names = c("dataset",
@@ -28,14 +28,12 @@ raw_by_sa4 <- read_csv("ABS Stats conf unemp data.csv",
   rename(state = state_name_2016) %>%
   select(state, everything())
 
-glimpse(raw_by_sa4)
-
-pop_data <- read_csv('population_by_sa4.csv', skip = 10, col_names = c("dataset", "sa4", "population"))
+pop_data <- read_csv('raw_data/population_by_sa4.csv', skip = 10, col_names = c("dataset", "sa4", "population"))
 
 raw_by_sa4 <- raw_by_sa4 %>% left_join(select(pop_data, -dataset), by = "sa4") %>%
   mutate(density = population/areasqkm_2016)
 
-write_csv(raw_by_sa4, "unemployment_data_by_sa4.csv")
+write_csv(raw_by_sa4, "clean_data/unemployment_data_by_sa4.csv")
 
 
 
