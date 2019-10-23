@@ -2,6 +2,9 @@
 
 # We start with a simple logistic regression (ignoring any nesting)
 
+
+
+
 ### ------- Set up -------------------------------------------------------------
 
 library(tidyverse)
@@ -29,6 +32,8 @@ wide_form <- unemployment_data %>%
   mutate(logdensity = log10(density))
 
 
+
+
 ### ------- Simple logistic regression --------------------------------------------------------
 
 simple_logit_model <- glm(data = wide_form, 
@@ -43,6 +48,10 @@ summary(simple_logit_model)
 # non-degree holders are quite a bit more likely to be unemployed.
 
 # But let's dig a little deeper
+
+
+
+
 
 # We add interaction terms now ------------------------------------------------------------
 
@@ -93,6 +102,8 @@ predict(logit_model, newdata = cameo, type = "response")
 # Using type = "response" means we get probabilities instead of log-odds as our output
 
 
+
+
 ##------ Plotting interaction effects -----------------------------------------
 
 # Interaction terms are fascinating - how does sex moderate age, and how does ATSI status moderate education?
@@ -130,6 +141,8 @@ ggplot(new_data,
 
 
 grattan_save("interaction_sex_age.png", type = "normal")
+
+
 
 
 ## b) education by ATSI status --------------------------------------------------------------

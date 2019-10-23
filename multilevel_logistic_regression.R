@@ -5,6 +5,7 @@
 source('logistic_regression.R')
 
 
+
 ####------- Multilevel logistic regression -----------------------
 
 # We specific a model with interactions between ATSI and education, 
@@ -44,6 +45,10 @@ grattan_save("unemployment_heat_map_controlled.png", type = "normal")
 
 # It looks like there is underlying similarity within each SA4 (which is why the random effects vary quite widely)
 
+
+
+
+
 # What happens if we just leave sa4 as a fixed effect? --------------------------------------------------------------
 
 sa4_logit_model <- glm(data = wide_form, 
@@ -54,6 +59,9 @@ summary(sa4_logit_model)
 
 # Since we've sampled every SA4, this is probably an okay thing to do. 
 # Normally you'd use a random intercept model when you haven't sampled from every cluster
+
+
+
 
 # Why would you actually bother with a multi-level model, in this example? -----------------------------------
 
@@ -96,6 +104,10 @@ sa4_effects = ranef(mixed_effects)$sa4
 sa4_effects = mutate(sa4_effects, sa4 = row.names(sa4_effects))
 sa4_effects %>% 
   arrange(desc(`(Intercept)`))
+
+
+
+
 
 #------- A second example, using population density ---------------------------------------------------------
 fe_2 <- glm(data = wide_form, 
